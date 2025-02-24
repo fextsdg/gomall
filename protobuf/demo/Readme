@@ -1,0 +1,6 @@
+1.运行方法
+ -docker-compose up -d (关闭命令：docker-compose down)
+ -cd protobuf/demo
+ -go work use.
+ -go mod tidy
+ -go run .
