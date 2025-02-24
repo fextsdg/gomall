@@ -1,0 +1,15 @@
+services:
+  consul:
+    image: 'hashicorp/consul'
+    ports:
+      - 8500:8500
+  mysql:
+    image: 'mysql:5.7.17'
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=demoproto
+    volumes:
+      - E:/DockerData/mysql:/var/lib/mysql  # 将宿主机 E 盘的路径挂载到容器中的 /var/lib/mysql 保留运行数据
+
