@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/cloudwego/hertz/pkg/app"
-	home "gomall/app/frontend/hertz_gen/frontend/home"
+	common "gomall/app/frontend/hertz_gen/frontend/common"
 )
 
 type HomeService struct {
@@ -16,7 +16,7 @@ func NewHomeService(Context context.Context, RequestContext *app.RequestContext)
 	return &HomeService{RequestContext: RequestContext, Context: Context}
 }
 
-func (h *HomeService) Run(req *home.Empty) (res map[string]any, err error) {
+func (h *HomeService) Run(req *common.Empty) (res map[string]any, err error) {
 	//defer func() {
 	// hlog.CtxInfof(h.Context, "req = %+v", req)
 	// hlog.CtxInfof(h.Context, "resp = %+v", resp)

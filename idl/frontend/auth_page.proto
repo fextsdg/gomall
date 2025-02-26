@@ -1,0 +1,17 @@
+syntax = "proto3";
+package frontend.auth;
+option go_package = "frontend/auth";
+import "api.proto";
+import "frontend/common.proto";
+
+
+message LoginReq{
+    string email=1 [(api.form)="email"];
+    string password=2 [(api.form)="password"];
+}
+
+service AuthService{
+    rpc Login(LoginReq) returns (common.Empty){
+        option (api.post)="/auth/login";
+};
+}
