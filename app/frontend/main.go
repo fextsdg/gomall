@@ -36,6 +36,10 @@ func main() {
 		ctx.JSON(consts.StatusOK, utils.H{"ping": "pong"})
 	})
 
+	h.GET("/sign-in", func(c context.Context, ctx *app.RequestContext) {
+		ctx.HTML(consts.StatusOK, "sign-in", utils.H{"Name": "Sign-In"}) //渲染静态页面
+	})
+
 	router.GeneratedRegister(h)
 	h.LoadHTMLGlob("template/*") //指定html模板文件
 	h.Static("/static", "./")    //查找静态资源
