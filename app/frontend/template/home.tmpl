@@ -1,65 +1,76 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home</title>
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/190f00cf38.js" crossorigin="anonymous"></script>
-  </head>
-
-  <body>
-    <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-          <div class="container-fluid">
-            <img class="navbar-brand" href="#" src="/static/images/logo.png" height="60"></img>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Categories
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">T-shirt</a></li>
-                    <li><a class="dropdown-item" href="#">Sticker</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                </li>
-              </ul>
-              <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
-
-              <div class="ms-3">
-                <i class="fa-solid fa-cart-plus fa-xl"></i>
+{{template "header" .}}
+        <div class="container-fluid">
+            <div class="row">
+              <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0" >
+                <img src="/static/images/phone.avif" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">华为智选优畅享50Plus 仅￥9.99包邮啦！ </h5>
+                  <p class="card-text">S华为智选优畅享50Plus 5G全网通 6400万AI影像 8GB+128GB海雾蓝【充电套装】 </p>
+                  <a href="#" class="btn btn-primary">BUY IT</a>
+                </div>
               </div>
 
-              <div class="ms-3">
-                <i class="fa-solid fa-user fa-xl"></i>
+              <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0">
+                  <img src="/static/images/book.avif" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">python编程 ￥108.00！ </h5>
+                    <p class="card-text">python编程从入门三剑客Python编程从入门到实践+快速上手+极客编程+编程实战 （第3版） 三剑客全套4册</p>
+                    <a href="#" class="btn btn-primary">BUY IT</a>
+                  </div>
               </div>
-              <div class="ms-3">
-                <button type="button" class="btn btn-primary">Login</button>
+              <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0">
+                  <img src="/static/images/Tshirt.avif" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">秋冬新款长袖t恤 ￥12.90！ </h5>
+                    <p class="card-text">秋冬新款长袖t恤女修身显瘦打底衫内搭上衣高级感欧货 愚仁1045白色 L</p>
+                    <a href="#" class="btn btn-primary">BUY IT</a>
+                  </div>
               </div>
+              <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0">
+                  <img src="/static/images/watch.avif" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">哪吒元素手表 ￥9.90另付邮费！ </h5>
+                    <p class="card-text">哪吒元素手表青少年学生休闲时尚石英手表儿童礼物国潮手表 魔童降世 40mm</p>
+                    <a href="#" class="btn btn-primary">BUY IT</a>
+                  </div>
+              </div>
+
+              <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0" >
+                <img src="/static/images/phone.avif" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">华为智选优畅享50Plus 仅￥9.99包邮啦！ </h5>
+                  <p class="card-text">S华为智选优畅享50Plus 5G全网通 6400万AI影像 8GB+128GB海雾蓝【充电套装】 </p>
+                  <a href="#" class="btn btn-primary">BUY IT</a>
+                </div>
+              </div>
+
+              <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0">
+                  <img src="/static/images/book.avif" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">python编程 ￥108.00！ </h5>
+                    <p class="card-text">python编程从入门三剑客Python编程从入门到实践+快速上手+极客编程+编程实战 （第3版） 三剑客全套4册</p>
+                    <a href="#" class="btn btn-primary">BUY IT</a>
+                  </div>
+              </div>
+              <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0">
+                  <img src="/static/images/Tshirt.avif" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">秋冬新款长袖t恤 ￥12.90！ </h5>
+                    <p class="card-text">秋冬新款长袖t恤女修身显瘦打底衫内搭上衣高级感欧货 愚仁1045白色 L</p>
+                    <a href="#" class="btn btn-primary">BUY IT</a>
+                  </div>
+              </div>
+              <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0">
+                  <img src="/static/images/watch.avif" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">哪吒元素手表 ￥9.90另付邮费！ </h5>
+                    <p class="card-text">哪吒元素手表青少年学生休闲时尚石英手表儿童礼物国潮手表 魔童降世 40mm</p>
+                    <a href="#" class="btn btn-primary">BUY IT</a>
+                  </div>
+              </div>
+
             </div>
-          </div>
-        </nav>
-    </header>
-    <footer>
-        <div class="bg-primary text-white text-center py-2" >
-           <p>&copy; 202502 <a href="https://github.com/fextsdg" class="text-warning stretched-link">fextsdg</a></p>
+
         </div>
-    </footer>
-    <script src="/static/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  </body>
-</html>
+
+{{template "footer"}}
