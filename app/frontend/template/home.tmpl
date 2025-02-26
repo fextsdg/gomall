@@ -1,74 +1,17 @@
 {{template "header" .}}
+
         <div class="container-fluid">
             <div class="row">
+              {{range .Items}}
               <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0" >
-                <img src="/static/images/phone.avif" class="card-img-top" alt="...">
+                <img src={{.Image}} alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">华为智选优畅享50Plus 仅￥9.99包邮啦！ </h5>
-                  <p class="card-text">S华为智选优畅享50Plus 5G全网通 6400万AI影像 8GB+128GB海雾蓝【充电套装】 </p>
+                  <h5 class="card-title">{{.Name}} </h5>
+                  <p class="card-text">{{.title}} </p>
                   <a href="#" class="btn btn-primary">BUY IT</a>
                 </div>
               </div>
-
-              <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0">
-                  <img src="/static/images/book.avif" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">python编程 ￥108.00！ </h5>
-                    <p class="card-text">python编程从入门三剑客Python编程从入门到实践+快速上手+极客编程+编程实战 （第3版） 三剑客全套4册</p>
-                    <a href="#" class="btn btn-primary">BUY IT</a>
-                  </div>
-              </div>
-              <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0">
-                  <img src="/static/images/Tshirt.avif" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">秋冬新款长袖t恤 ￥12.90！ </h5>
-                    <p class="card-text">秋冬新款长袖t恤女修身显瘦打底衫内搭上衣高级感欧货 愚仁1045白色 L</p>
-                    <a href="#" class="btn btn-primary">BUY IT</a>
-                  </div>
-              </div>
-              <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0">
-                  <img src="/static/images/watch.avif" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">哪吒元素手表 ￥9.90另付邮费！ </h5>
-                    <p class="card-text">哪吒元素手表青少年学生休闲时尚石英手表儿童礼物国潮手表 魔童降世 40mm</p>
-                    <a href="#" class="btn btn-primary">BUY IT</a>
-                  </div>
-              </div>
-
-              <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0" >
-                <img src="/static/images/phone.avif" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">华为智选优畅享50Plus 仅￥9.99包邮啦！ </h5>
-                  <p class="card-text">S华为智选优畅享50Plus 5G全网通 6400万AI影像 8GB+128GB海雾蓝【充电套装】 </p>
-                  <a href="#" class="btn btn-primary">BUY IT</a>
-                </div>
-              </div>
-
-              <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0">
-                  <img src="/static/images/book.avif" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">python编程 ￥108.00！ </h5>
-                    <p class="card-text">python编程从入门三剑客Python编程从入门到实践+快速上手+极客编程+编程实战 （第3版） 三剑客全套4册</p>
-                    <a href="#" class="btn btn-primary">BUY IT</a>
-                  </div>
-              </div>
-              <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0">
-                  <img src="/static/images/Tshirt.avif" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">秋冬新款长袖t恤 ￥12.90！ </h5>
-                    <p class="card-text">秋冬新款长袖t恤女修身显瘦打底衫内搭上衣高级感欧货 愚仁1045白色 L</p>
-                    <a href="#" class="btn btn-primary">BUY IT</a>
-                  </div>
-              </div>
-              <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0">
-                  <img src="/static/images/watch.avif" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">哪吒元素手表 ￥9.90另付邮费！ </h5>
-                    <p class="card-text">哪吒元素手表青少年学生休闲时尚石英手表儿童礼物国潮手表 魔童降世 40mm</p>
-                    <a href="#" class="btn btn-primary">BUY IT</a>
-                  </div>
-              </div>
-
+              {{end}}
             </div>
 
         </div>
