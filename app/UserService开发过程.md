@@ -8,4 +8,9 @@
 - #### 设计register接口(接收表单)
   - 1.更新idl--` auth_page.proto ` --添加相应服务
   - 2.编写相应业务逻辑
-  
+- #### 优化登录成功后的跳转页面
+  - 1.修改mian.go 中关于signin的注册路由部分，将Referer传递到resp中
+  - 2.修改sign-in.tmpl中表单接收url将Referer作为参数传递出去
+  - 3.修改 auth-page.proto 登录请求结构体新增字段next用于保存跳转前的url
+  - 4.修改 service/login.go将接收到的重定向参数返回到控制器
+  - 5.修改auth_service.go中的重定向url

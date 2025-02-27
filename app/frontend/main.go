@@ -47,7 +47,12 @@ func main() {
 	})
 
 	h.GET("/sign-in", func(c context.Context, ctx *app.RequestContext) {
-		ctx.HTML(consts.StatusOK, "sign-in", utils.H{"Name": "Sign-In"}) //渲染静态页面
+		uh := utils.H{
+			"Name": "Sign-In",
+			"Next": ctx.Request.Header.Get("Referer"), //或取上一个页面来源
+		}
+
+		ctx.HTML(consts.StatusOK, "sign-in", uh) //渲染静态页面
 	})
 	//注册路由
 	h.GET("/sign-up", func(c context.Context, ctx *app.RequestContext) {

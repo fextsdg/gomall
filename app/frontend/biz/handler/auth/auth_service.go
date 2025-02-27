@@ -23,14 +23,14 @@ func Login(ctx context.Context, c *app.RequestContext) {
 	}
 
 	//resp := &common.Empty{}
-	_, err = service.NewLoginService(ctx, c).Run(&req)
+	redirect, err := service.NewLoginService(ctx, c).Run(&req)
 	if err != nil {
 		utils.SendErrResponse(ctx, c, consts.StatusOK, err)
 		return
 	}
 
 	//utils.SendSuccessResponse(ctx, c, consts.StatusOK, resp)
-	c.Redirect(consts.StatusOK, []byte("/")) //重定向
+	c.Redirect(consts.StatusOK, []byte(redirect)) //重定向
 }
 
 // Register .

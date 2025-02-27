@@ -8,6 +8,7 @@ import "frontend/common.proto";
 message LoginReq{
     string email=1 [(api.form)="email"];
     string password=2 [(api.form)="password"];
+    string next=3 [(api.query)="next"];
 }
 
 message RegisterReq{
