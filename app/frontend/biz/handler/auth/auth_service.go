@@ -8,7 +8,6 @@ import (
 	"gomall/app/frontend/biz/service"
 	"gomall/app/frontend/biz/utils"
 	auth "gomall/app/frontend/hertz_gen/frontend/auth"
-	common "gomall/app/frontend/hertz_gen/frontend/common"
 )
 
 // Login .
@@ -22,12 +21,13 @@ func Login(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := &common.Empty{}
-	resp, err = service.NewLoginService(ctx, c).Run(&req)
+	//resp := &common.Empty{}
+	_, err = service.NewLoginService(ctx, c).Run(&req)
 	if err != nil {
 		utils.SendErrResponse(ctx, c, consts.StatusOK, err)
 		return
 	}
 
-	utils.SendSuccessResponse(ctx, c, consts.StatusOK, resp)
+	//utils.SendSuccessResponse(ctx, c, consts.StatusOK, resp)
+	c.Redirect(consts.StatusOK, []byte("/")) //重定向
 }

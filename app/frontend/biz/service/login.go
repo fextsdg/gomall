@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"github.com/hertz-contrib/sessions"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	auth "gomall/app/frontend/hertz_gen/frontend/auth"
@@ -22,6 +23,11 @@ func (h *LoginService) Run(req *auth.LoginReq) (resp *common.Empty, err error) {
 	// hlog.CtxInfof(h.Context, "req = %+v", req)
 	// hlog.CtxInfof(h.Context, "resp = %+v", resp)
 	//}()
-	// todo edit your code
+	// 处理登录验证逻辑
+
+	session := sessions.Default(h.RequestContext)
+
+	session.Set("user_id", 123456)
+	session.Save()
 	return
 }

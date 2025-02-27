@@ -68,6 +68,7 @@ func (h *HomeService) Run(req *common.Empty) (res map[string]any, err error) {
 		},
 	}
 	res["Items"] = items
+	//res["user_id"] = 123
 
 	return res, nil
 }

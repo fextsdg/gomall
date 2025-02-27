@@ -4,6 +4,11 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"github.com/hertz-contrib/sessions"
+	"github.com/hertz-contrib/sessions/redis"
+	"github.com/joho/godotenv"
+	"os"
 	"time"
 
 	"github.com/cloudwego/hertz/pkg/app"
@@ -24,6 +29,11 @@ import (
 )
 
 func main() {
+	//加载环境变量
+	err := godotenv.Load(".env")
+	if err != nil {
+		panic(fmt.Sprintf("加载环境变量出错,err:=%v", err))
+	}
 	// init dal
 	// dal.Init()
 	address := conf.GetConf().Hertz.Address
@@ -85,4 +95,8 @@ func registerMiddleware(h *server.Hertz) {
 
 	// cores
 	h.Use(cors.Default())
+
+	//session
+	store, _ := redis.NewStore(10, "tcp", conf.GetConf().Redis.Address, "", []byte(os.Getenv("SESSION_SECRET")))
+	h.Use(sessions.New("fextsdg-shop", store)) //fextsdg-shop 是会话的名称，它用于标识存储在 Redis 中的会话数据。实际存储的是与该会话相关的数据。
 }
