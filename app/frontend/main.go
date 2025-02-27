@@ -49,6 +49,10 @@ func main() {
 	h.GET("/sign-in", func(c context.Context, ctx *app.RequestContext) {
 		ctx.HTML(consts.StatusOK, "sign-in", utils.H{"Name": "Sign-In"}) //渲染静态页面
 	})
+	//注册路由
+	h.GET("/sign-up", func(c context.Context, ctx *app.RequestContext) {
+		ctx.HTML(consts.StatusOK, "sign-up", utils.H{"Name": "Sign-Up"})
+	})
 
 	router.GeneratedRegister(h)
 	h.LoadHTMLGlob("template/*") //指定html模板文件
