@@ -22,5 +22,8 @@ service AuthService{
     rpc Register(RegisterReq) returns (common.Empty){
         option (api.post)="/auth/register";
     };
+    rpc Logout(common.Empty) returns (common.Empty){
+        option (api.post)="/auth/logout";
+    };
 
 }

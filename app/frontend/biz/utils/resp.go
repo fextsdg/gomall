@@ -2,6 +2,7 @@ package utils
 
 import (
 	"context"
+	"github.com/hertz-contrib/sessions"
 
 	"github.com/cloudwego/hertz/pkg/app"
 )
@@ -20,6 +21,7 @@ func SendSuccessResponse(ctx context.Context, c *app.RequestContext, code int, d
 
 func WarpResponse(ctx context.Context, c *app.RequestContext, content map[string]any) map[string]any {
 	// todo edit custom code
-	content["user_id"] = 123
+	session := sessions.Default(c)
+	content["user_id"] = session.Get("user_id")
 	return content
 }
