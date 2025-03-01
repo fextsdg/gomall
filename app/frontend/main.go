@@ -59,6 +59,9 @@ func main() {
 	h.GET("/sign-up", func(c context.Context, ctx *app.RequestContext) {
 		ctx.HTML(consts.StatusOK, "sign-up", utils.H{"Name": "Sign-Up"})
 	})
+	h.GET("/about", middleware.Auth(), func(c context.Context, ctx *app.RequestContext) {
+		ctx.HTML(consts.StatusOK, "about", utils.H{"Name": "About"})
+	})
 
 	router.GeneratedRegister(h)
 	h.LoadHTMLGlob("template/*") //指定html模板文件
