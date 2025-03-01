@@ -2,7 +2,7 @@ package utils
 
 import (
 	"context"
-	"github.com/hertz-contrib/sessions"
+	"gomall/app/frontend/middleware"
 
 	"github.com/cloudwego/hertz/pkg/app"
 )
@@ -19,9 +19,9 @@ func SendSuccessResponse(ctx context.Context, c *app.RequestContext, code int, d
 	c.JSON(code, data)
 }
 
+// 用于添加用户登录信息
 func WarpResponse(ctx context.Context, c *app.RequestContext, content map[string]any) map[string]any {
 	// todo edit custom code
-	session := sessions.Default(c)
-	content["user_id"] = session.Get("user_id")
+	content["user_id"] = ctx.Value(middleware.SessionUserId)
 	return content
 }

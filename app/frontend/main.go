@@ -8,6 +8,7 @@ import (
 	"github.com/hertz-contrib/sessions"
 	"github.com/hertz-contrib/sessions/redis"
 	"github.com/joho/godotenv"
+	"gomall/app/frontend/middleware"
 	"os"
 	"time"
 
@@ -40,7 +41,7 @@ func main() {
 	h := server.New(server.WithHostPorts(address))
 
 	registerMiddleware(h)
-
+	middleware.Register(h)
 	// add a ping route to test
 	h.GET("/ping", func(c context.Context, ctx *app.RequestContext) {
 		ctx.JSON(consts.StatusOK, utils.H{"ping": "pong"})
