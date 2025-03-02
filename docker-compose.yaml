@@ -9,7 +9,8 @@ services:
       - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=demoproto
+#      - MYSQL_DATABASE=demoproto
+#      - MYSQL_DATABASE=gomall
     volumes:
       - E:/DockerData/mysql:/var/lib/mysql  # 将宿主机 E 盘的路径挂载到容器中的 /var/lib/mysql 保留运行数据
 
