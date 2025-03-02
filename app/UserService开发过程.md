@@ -14,3 +14,4 @@
   - 3.修改 auth-page.proto 登录请求结构体新增字段next用于保存跳转前的url
   - 4.修改 service/login.go将接收到的重定向参数返回到控制器
   - 5.修改auth_service.go中的重定向url
+- #### 添加一些中间件，比如鉴权
