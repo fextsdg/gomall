@@ -12,3 +12,17 @@ type User struct {
 func (receiver User) TableName() string {
 	return "user"
 }
+
+// 创建用户
+func Create(db *gorm.DB, user *User) error {
+	return db.Create(&user).Error
+}
+
+func GetUserByEmail(db *gorm.DB, email string) (user *User, err error) {
+	user = &User{}
+	err = db.Where("email=?", email).Find(user).Error
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}

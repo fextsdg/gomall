@@ -3,7 +3,6 @@ package user
 import (
 	"context"
 	user "gomall/rpc_gen/kitex_gen/user"
-	"gomall/rpc_gen/kitex_gen/user/userservice"
 
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/client/callopt"
