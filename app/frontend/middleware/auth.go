@@ -5,11 +5,8 @@ import (
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	"github.com/hertz-contrib/sessions"
+	"gomall/app/frontend/utils"
 )
-
-type SessionUserIdKey string
-
-const SessionUserId SessionUserIdKey = "user_id"
 
 // 为了方便业务逻辑获取用户信息，从session中获取用户信息，然后放在context中
 // GlobalAuth 返回一个中间件处理函数，用于全局认证。
@@ -21,7 +18,7 @@ func GlobalAuth() app.HandlerFunc {
 		session := sessions.Default(ctx)
 		// 将用户ID从会话中取出，并添加到请求上下文中
 		// 这里的SessionUserId是一个全局变量或者常量，用于在上下文中标识用户ID的键
-		c = context.WithValue(c, SessionUserId, session.Get("user_id"))
+		c = context.WithValue(c, utils.SessionUserId, session.Get("user_id"))
 		// 调用下一个处理函数，将处理权移交给链中的下一个中间件或最终的处理函数
 		ctx.Next(c)
 	}
@@ -32,9 +29,9 @@ func GlobalAuth() app.HandlerFunc {
 func Auth() app.HandlerFunc {
 	return func(c context.Context, ctx *app.RequestContext) {
 		// 从请求上下文中获取用户ID，用于验证用户登录状态
-		userid := c.Value(SessionUserId)
+		userid := utils.GetUserIdFromCtx(c)
 		// 用户未登录，则跳转登录界面
-		if userid == nil {
+		if userid == 0 {
 			// 使用 HTTP 302 临时重定向到登录页面，并将当前请求路径作为登录后的跳转目标
 			ctx.Redirect(consts.StatusFound, []byte("/sign-in?next="+ctx.FullPath()))
 			// 中断当前请求处理

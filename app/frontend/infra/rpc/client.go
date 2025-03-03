@@ -1,10 +1,10 @@
 package rpc
 
 import (
-	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/kitex/client"
 	consul "github.com/kitex-contrib/registry-consul"
 	"gomall/app/frontend/conf"
+	"gomall/app/frontend/utils"
 	"gomall/rpc_gen/kitex_gen/user/userservice"
 	"sync"
 )
@@ -33,8 +33,6 @@ func Init() {
 // - 创建用户服务客户端：使用 Consul 解析器初始化用户服务客户端。
 func initUserClient() {
 	r, err := consul.NewConsulResolver(conf.GetConf().Hertz.RegistryAddress)
-	if err != nil {
-		hlog.Fatal(err)
-	}
+	utils.MustHandlerError(err)
 	UserClient = userservice.MustNewClient("user", client.WithResolver(r))
 }

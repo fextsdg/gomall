@@ -2,9 +2,8 @@ package utils
 
 import (
 	"context"
-	"gomall/app/frontend/middleware"
-
 	"github.com/cloudwego/hertz/pkg/app"
+	"gomall/app/frontend/utils"
 )
 
 // SendErrResponse  pack error response
@@ -22,6 +21,6 @@ func SendSuccessResponse(ctx context.Context, c *app.RequestContext, code int, d
 // 用于添加用户登录信息
 func WarpResponse(ctx context.Context, c *app.RequestContext, content map[string]any) map[string]any {
 	// todo edit custom code
-	content["user_id"] = ctx.Value(middleware.SessionUserId)
+	content["user_id"] = utils.GetUserIdFromCtx(ctx)
 	return content
 }
