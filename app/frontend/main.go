@@ -8,6 +8,7 @@ import (
 	"github.com/hertz-contrib/sessions"
 	"github.com/hertz-contrib/sessions/redis"
 	"github.com/joho/godotenv"
+	"gomall/app/frontend/infra/rpc"
 	"gomall/app/frontend/middleware"
 	"os"
 	"time"
@@ -37,6 +38,7 @@ func main() {
 	}
 	// init dal
 	// dal.Init()
+	rpc.Init()
 	address := conf.GetConf().Hertz.Address
 	h := server.New(server.WithHostPorts(address))
 
