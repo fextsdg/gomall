@@ -3,6 +3,7 @@ package product
 import (
 	"context"
 	product "gomall/rpc_gen/kitex_gen/product"
+	"gomall/rpc_gen/kitex_gen/product/productcatalogservice"
 
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/client/callopt"

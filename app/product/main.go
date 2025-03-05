@@ -1,6 +1,9 @@
 package main
 
 import (
+	"github.com/joho/godotenv"
+	consul "github.com/kitex-contrib/registry-consul"
+	"gomall/app/product/biz/dal"
 	"net"
 	"time"
 
@@ -15,7 +18,12 @@ import (
 )
 
 func main() {
+	err1 := godotenv.Load(".env")
+	if err1 != nil {
+		panic(err1)
+	}
 	opts := kitexInit()
+	dal.Init()
 
 	svr := productcatalogservice.NewServer(new(ProductCatalogServiceImpl), opts...)
 
@@ -37,6 +45,13 @@ func kitexInit() (opts []server.Option) {
 	opts = append(opts, server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{
 		ServiceName: conf.GetConf().Kitex.Service,
 	}))
+
+	//服务注册中心consul
+	registry, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0])
+	if err != nil {
+		panic(err)
+	}
+	opts = append(opts, server.WithRegistry(registry))
 
 	// klog
 	logger := kitexlogrus.NewLogger()
