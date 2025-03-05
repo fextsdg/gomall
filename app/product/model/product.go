@@ -29,16 +29,20 @@ type ProductQuery struct {
 	ctx context.Context
 }
 
+func NewProudctQuery(db *gorm.DB, ctx context.Context) ProductQuery {
+	return ProductQuery{db: db, ctx: ctx}
+}
+
 // 通过商品id查询商品
-func (pq ProductQuery) GetProductById(id int32) (p Product, err error) {
-	p = Product{}
-	err = pq.db.WithContext(pq.ctx).First(&p, "id=?", id).Error
+func (pq ProductQuery) GetProductById(id int32) (p *Product, err error) {
+	p = &Product{}
+	err = pq.db.WithContext(pq.ctx).First(p, "id=?", id).Error
 	return
 }
 
 // 通过名称或描述查询商品
-func (pq ProductQuery) SearchProducts(query string) (products []Product, err error) {
+func (pq ProductQuery) SearchProducts(query string) (products []*Product, err error) {
 	searchPattern := "%" + query + "%"
-	err = pq.db.WithContext(pq.ctx).Where("name like ? or description like ?", searchPattern, searchPattern).Find(&products).Error
+	err = pq.db.WithContext(pq.ctx).Where("name like ? or description like ?", searchPattern, searchPattern).Find(products).Error
 	return
 }

@@ -21,8 +21,12 @@ type CategoryQuery struct {
 	ctx context.Context
 }
 
+func NewCategoryQuery(db *gorm.DB, ctx context.Context) CategoryQuery {
+	return CategoryQuery{db: db, ctx: ctx}
+}
+
 // 通过分类名称获取商品列表
-func (cq CategoryQuery) GetProductByCategoryName(categoryName string) (categorites []Category, err error) {
-	err = cq.db.WithContext(cq.ctx).Where(&Category{CategoryName: categoryName}).Preload("product").Find(&categorites).Error
+func (cq CategoryQuery) GetProductByCategoryName(categoryName string) (categorites []*Category, err error) {
+	err = cq.db.WithContext(cq.ctx).Where(&Category{CategoryName: categoryName}).Preload("product").Find(categorites).Error
 	return
 }
