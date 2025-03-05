@@ -13,3 +13,11 @@ gen-user-client:
 .PHONY:gen-user-server
 gen-user-server:
 	@cd app/user && cwgo server --type rpc --service user --module gomall/app/user  -I ../../idl --idl ../../idl/user.proto --pass "-use gomall/rpc_gen/kitex_gen"
+
+.PHONY :gen-product-client
+gen-product-client:
+	@cd rpc_gen && cwgo client --service product --type rpc --I ../idl --idl ../idl/product.proto --module gomall/rpc_gen
+
+.PHONY :gen-product-server
+gen-product-server:
+	@cd app/product && cwgo client --service product --type rpc --I ../idl --idl ../idl/product.proto --module gomall/rpc_gen
