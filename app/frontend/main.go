@@ -59,10 +59,10 @@ func main() {
 	})
 	//注册路由
 	h.GET("/sign-up", func(c context.Context, ctx *app.RequestContext) {
-		ctx.HTML(consts.StatusOK, "sign-up", utils.H{"Name": "Sign-Up"})
+		ctx.HTML(consts.StatusOK, "sign-up", map[string]any{"Name": "Sign-Up"})
 	})
 	h.GET("/about", middleware.Auth(), func(c context.Context, ctx *app.RequestContext) {
-		ctx.HTML(consts.StatusOK, "about", utils.H{"Name": "About"})
+		ctx.HTML(consts.StatusOK, "about", map[string]any{"Name": "About"})
 	})
 
 	router.GeneratedRegister(h)

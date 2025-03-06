@@ -19,8 +19,8 @@ func SendSuccessResponse(ctx context.Context, c *app.RequestContext, code int, d
 }
 
 // 用于添加用户登录信息
-func WarpResponse(ctx context.Context, c *app.RequestContext, content map[string]any) map[string]any {
+func WarpResponse(ctx context.Context, c *app.RequestContext, resp map[string]any) map[string]any {
 	// todo edit custom code
-	content["user_id"] = utils.GetUserIdFromCtx(ctx)
-	return content
+	resp["user_id"] = utils.GetUserIdFromCtx(ctx)
+	return resp
 }

@@ -26,7 +26,8 @@ func NewCategoryQuery(db *gorm.DB, ctx context.Context) CategoryQuery {
 }
 
 // 通过分类名称获取商品列表
-func (cq CategoryQuery) GetProductByCategoryName(categoryName string) (categorites []*Category, err error) {
-	err = cq.db.WithContext(cq.ctx).Where(&Category{CategoryName: categoryName}).Preload("product").Find(categorites).Error
+func (cq CategoryQuery) GetProductByCategoryName(categoryName string) (categories []*Category, err error) {
+	categories = make([]*Category, 0)
+	err = cq.db.WithContext(cq.ctx).Where(&Category{CategoryName: categoryName}).Preload("Product").Find(&categories).Error
 	return
 }

@@ -43,6 +43,6 @@ func (pq ProductQuery) GetProductById(id int32) (p *Product, err error) {
 // 通过名称或描述查询商品
 func (pq ProductQuery) SearchProducts(query string) (products []*Product, err error) {
 	searchPattern := "%" + query + "%"
-	err = pq.db.WithContext(pq.ctx).Where("name like ? or description like ?", searchPattern, searchPattern).Find(products).Error
+	err = pq.db.WithContext(pq.ctx).Where("name like ? or description like ?", searchPattern, searchPattern).Find(&products).Error
 	return
 }

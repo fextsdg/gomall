@@ -13,4 +13,6 @@ services:
 #      - MYSQL_DATABASE=gomall
     volumes:
       - E:/DockerData/mysql:/var/lib/mysql  # 将宿主机 E 盘的路径挂载到容器中的 /var/lib/mysql 保留运行数据
+    command:
+      --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci #字符集设置
 

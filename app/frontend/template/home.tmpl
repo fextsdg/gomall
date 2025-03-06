@@ -4,11 +4,12 @@
             <div class="row">
               {{range .Items}}
               <div class="card col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 p-5 board-0" >
-                <img src={{.Image}} alt="...">
-                <div class="card-body">
+                <img src={{.Picture}} class="col-lg-6 col-sm-12" alt="...">
+                <div class="card-body row">
                   <h5 class="card-title">{{.Name}} </h5>
-                  <p class="card-text">{{.title}} </p>
-                  <a href="#" class="btn btn-primary">BUY IT</a>
+                  <p class="card-text">{{.Description}} </p>
+                    <p class="card-text">${{.Price}} </p>
+                  <a href="/product?id={{ .Id }}" class="btn btn-primary">Look</a>
                 </div>
               </div>
               {{end}}

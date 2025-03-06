@@ -1,0 +1,15 @@
+syntax = "proto3";
+package frontend.category;
+option go_package = "frontend/category";
+import "api.proto";
+import "frontend/common.proto";
+
+service CategoryService{
+    rpc ListProductsByCategoryName(ListProductsReq) returns (common.Empty){
+        option (api.get)="/category/:category";//‘:category’是一个路径参数，访问时‘:category’换成具体的类名
+    }
+
+}
+message ListProductsReq{
+    string category=1 [(api.path)="category"];
+}
