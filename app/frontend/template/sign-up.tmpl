@@ -1,5 +1,5 @@
 {{define "sign-up"}}
-{{template "header"}}
+{{template "header" .}}
 
 <div class="row  col-4">
     <form method="post" action="/auth/register" >
@@ -23,5 +23,5 @@
 </div>
 
 
-{{template "footer"}}
+{{template "footer" .}}
 {{end}}

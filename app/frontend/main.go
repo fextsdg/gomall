@@ -27,6 +27,7 @@ import (
 	"go.uber.org/zap/zapcore"
 	"gomall/app/frontend/biz/router"
 	"gomall/app/frontend/conf"
+	hertz_utils "gomall/app/frontend/utils"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
@@ -51,18 +52,19 @@ func main() {
 
 	h.GET("/sign-in", func(c context.Context, ctx *app.RequestContext) {
 		uh := utils.H{
-			"Name": "Sign-In",
-			"Next": ctx.Request.Header.Get("Referer"), //或取上一个页面来源
+			"Name":    "Sign-In",
+			"Next":    ctx.Request.Header.Get("Referer"), //或取上一个页面来源
+			"user_id": hertz_utils.GetUserIdFromCtx(c),
 		}
 
 		ctx.HTML(consts.StatusOK, "sign-in", uh) //渲染静态页面
 	})
 	//注册路由
 	h.GET("/sign-up", func(c context.Context, ctx *app.RequestContext) {
-		ctx.HTML(consts.StatusOK, "sign-up", map[string]any{"Name": "Sign-Up"})
+		ctx.HTML(consts.StatusOK, "sign-up", map[string]any{"Name": "Sign-Up", "user_id": hertz_utils.GetUserIdFromCtx(c)})
 	})
 	h.GET("/about", middleware.Auth(), func(c context.Context, ctx *app.RequestContext) {
-		ctx.HTML(consts.StatusOK, "about", map[string]any{"Name": "About"})
+		ctx.HTML(consts.StatusOK, "about", map[string]any{"Name": "About", "user_id": hertz_utils.GetUserIdFromCtx(c)})
 	})
 
 	router.GeneratedRegister(h)

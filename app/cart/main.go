@@ -4,6 +4,7 @@ import (
 	"github.com/joho/godotenv"
 	consul "github.com/kitex-contrib/registry-consul"
 	"gomall/app/cart/biz/dal"
+	"gomall/app/cart/rpc"
 	"net"
 	"time"
 
@@ -24,6 +25,7 @@ func main() {
 	}
 	opts := kitexInit()
 	dal.Init()
+	rpc.Init() //初始化商品服务
 	svr := cartservice.NewServer(new(CartServiceImpl), opts...)
 
 	err := svr.Run()
