@@ -21,4 +21,9 @@ gen-product-client:
 
 .PHONY :gen-product-server
 gen-product-server:
-	@cd app/product && cwgo client --service product --type rpc --I ../idl --idl ../idl/product.proto --module gomall/rpc_gen
+	@cd app/product && cwgo server --type rpc --service product --module gomall/app/product  -I ../../idl --idl ../../idl/product.proto --pass "-use gomall/rpc_gen/kitex_gen"
+
+.PHONY :gen-cart
+gen-cart:
+	@cd rpc_gen && cwgo client --service cart --type rpc --I ../idl --idl ../idl/cart.proto --module gomall/rpc_gen
+	@cd app/cart && cwgo server --type rpc --service cart --module gomall/app/cart  -I ../../idl --idl ../../idl/cart.proto --pass "-use gomall/rpc_gen/kitex_gen"
