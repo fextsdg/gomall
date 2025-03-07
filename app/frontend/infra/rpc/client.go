@@ -5,6 +5,7 @@ import (
 	consul "github.com/kitex-contrib/registry-consul"
 	"gomall/app/frontend/conf"
 	"gomall/app/frontend/utils"
+	"gomall/rpc_gen/kitex_gen/cart/cartservice"
 	"gomall/rpc_gen/kitex_gen/product/productcatalogservice"
 	"gomall/rpc_gen/kitex_gen/user/userservice"
 	"sync"
@@ -14,6 +15,7 @@ var (
 	once          sync.Once //保证只被初始化一次
 	UserClient    userservice.Client
 	ProductClient productcatalogservice.Client
+	CartClient    cartservice.Client
 )
 
 // 初始化客户端
@@ -21,6 +23,7 @@ func Init() {
 	once.Do(func() {
 		initUserClient()
 		initProductClient()
+		initCartClient()
 	})
 }
 
@@ -44,4 +47,10 @@ func initProductClient() {
 	r, err := consul.NewConsulResolver(conf.GetConf().Hertz.RegistryAddress[0])
 	utils.MustHandlerError(err)
 	ProductClient = productcatalogservice.MustNewClient("product", client.WithResolver(r))
+}
+
+func initCartClient() {
+	r, err := consul.NewConsulResolver(conf.GetConf().Hertz.RegistryAddress[0])
+	utils.MustHandlerError(err)
+	CartClient = cartservice.MustNewClient("cart", client.WithResolver(r))
 }
