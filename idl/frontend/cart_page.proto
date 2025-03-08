@@ -21,6 +21,6 @@ service CartService{
 }
 
 message AddCartItemReq{
-    uint32 product_id=1 [ (api.form)="product_id"];
-    uint32 num=2 [(api.form)="num"];
+    uint32 product_id=1 [ (api.form)="productId"];
+    uint32 num=2 [(api.form)="productNum"];
 }

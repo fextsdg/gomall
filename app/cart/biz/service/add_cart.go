@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	"gomall/app/cart/biz/dal/mysql"
 	"gomall/app/cart/model"
@@ -24,7 +23,6 @@ func (s *AddCartService) Run(req *cart.AddCartReq) (resp *cart.AddCartResp, err 
 	if req.UserId <= 0 {
 		return nil, kerrors.NewGRPCBizStatusError(40000, "用户id有误！")
 	}
-	fmt.Println("111", rpc.ProductClient)
 	p, err := rpc.ProductClient.GetProduct(s.ctx, &product.GetProductReq{Id: int32(req.Item.ProductId)})
 	if err != nil {
 		return nil, err

@@ -23,7 +23,13 @@
             <div class="mt-3 mb-5">
                 <div class="float-end">
                     <div class="m-3 text-danger">Total: ${{ .total }}</div>
-                    <a href="/checkout" class="btn btn-lg btn-success float-end">Check out</a>
+                    <a href="/emptyCart" class="btn btn-outline-danger rounded-pill px-4">
+                        <i class="fa-solid fa-trash-can me-2"></i>Empty all
+                    </a>
+
+                    <a href="/checkout" class="btn btn-primary rounded-pill px-4">
+                        <i class="fa-solid fa-shopping-cart me-2"></i>Check out
+                    </a>
                 </div>
             </div>
         {{else}}

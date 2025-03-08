@@ -23,14 +23,14 @@ func AddCartItem(ctx context.Context, c *app.RequestContext) {
 	}
 
 	//resp := &common.Empty{}
-	resp, err := service.NewAddCartItemService(ctx, c).Run(&req)
+	_, err = service.NewAddCartItemService(ctx, c).Run(&req)
 	if err != nil {
 		utils.SendErrResponse(ctx, c, consts.StatusOK, err)
 		return
 	}
-
+	c.Redirect(consts.StatusFound, []byte("/cart"))
 	//utils.SendSuccessResponse(ctx, c, consts.StatusOK, resp)
-	c.HTML(consts.StatusOK, "cart", utils.WarpResponse(ctx, c, resp))
+	//c.HTML(consts.StatusOK, "cart", utils.WarpResponse(ctx, c, resp))
 }
 
 // GetCart .
@@ -67,12 +67,13 @@ func EmptyCart(ctx context.Context, c *app.RequestContext) {
 	}
 
 	//resp := &common.Empty{}
-	resp, err := service.NewEmptyCartService(ctx, c).Run(&req)
+	_, err = service.NewEmptyCartService(ctx, c).Run(&req)
 	if err != nil {
 		utils.SendErrResponse(ctx, c, consts.StatusOK, err)
 		return
 	}
 
 	//utils.SendSuccessResponse(ctx, c, consts.StatusOK, resp)
-	c.HTML(consts.StatusOK, "cart", utils.WarpResponse(ctx, c, resp))
+	//c.HTML(consts.StatusOK, "cart", utils.WarpResponse(ctx, c, resp))
+	c.Redirect(consts.StatusOK, []byte("/cart"))
 }
