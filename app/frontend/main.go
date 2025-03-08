@@ -8,6 +8,7 @@ import (
 	"github.com/hertz-contrib/sessions"
 	"github.com/hertz-contrib/sessions/redis"
 	"github.com/joho/godotenv"
+	utils2 "gomall/app/frontend/biz/utils"
 	"gomall/app/frontend/infra/rpc"
 	"gomall/app/frontend/middleware"
 	"os"
@@ -61,10 +62,15 @@ func main() {
 	})
 	//注册路由
 	h.GET("/sign-up", func(c context.Context, ctx *app.RequestContext) {
-		ctx.HTML(consts.StatusOK, "sign-up", map[string]any{"Name": "Sign-Up", "user_id": hertz_utils.GetUserIdFromCtx(c)})
+		resp := make(map[string]any)
+		resp["Name"] = "Sign-Up"
+
+		ctx.HTML(consts.StatusOK, "sign-up", utils2.WarpResponse(c, ctx, resp))
 	})
 	h.GET("/about", middleware.Auth(), func(c context.Context, ctx *app.RequestContext) {
-		ctx.HTML(consts.StatusOK, "about", map[string]any{"Name": "About", "user_id": hertz_utils.GetUserIdFromCtx(c)})
+		resp := make(map[string]any)
+		resp["Name"] = "About"
+		ctx.HTML(consts.StatusOK, "about", utils2.WarpResponse(c, ctx, resp))
 	})
 
 	router.GeneratedRegister(h)

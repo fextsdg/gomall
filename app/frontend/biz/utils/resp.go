@@ -3,7 +3,9 @@ package utils
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
+	"gomall/app/frontend/infra/rpc"
 	"gomall/app/frontend/utils"
+	"gomall/rpc_gen/kitex_gen/cart"
 )
 
 // SendErrResponse  pack error response
@@ -25,6 +27,13 @@ func WarpResponse(ctx context.Context, c *app.RequestContext, resp map[string]an
 	if resp == nil {
 		resp = make(map[string]any)
 	}
-	resp["user_id"] = utils.GetUserIdFromCtx(ctx)
+	userId := utils.GetUserIdFromCtx(ctx)
+	resp["user_id"] = userId
+
+	cartResp, err := rpc.CartClient.GetCart(ctx, &cart.GetCartReq{UserId: uint32(userId)})
+	if err != nil || cartResp == nil || cartResp.Cart == nil {
+		return resp
+	}
+	resp["cart_num"] = len(cartResp.Cart.Items)
 	return resp
 }
