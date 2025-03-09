@@ -1,0 +1,25 @@
+syntax = "proto3";
+package payment;
+option go_package = "payment";
+
+service PaymentService{
+    rpc Charge(ChargeReq) returns (ChargeResp);
+}
+
+message CreditInfo{
+    string credit_card_number=1;
+    int32 credit_card_cvv=2;
+    int32 credit_expiration_year=3;
+    int32 credit_expiration_moth=4;
+}
+
+message ChargeReq{
+    uint32 user_id=1;
+    string order_id=2;
+    CreditInfo credit_info=3;
+    float amount=4;//交易总价
+}
+
+message ChargeResp{
+    string transaction_id=1;//交易id
+}

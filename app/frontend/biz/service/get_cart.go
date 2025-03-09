@@ -44,7 +44,7 @@ func (h *GetCartService) Run(req *common.Empty) (resp map[string]any, err error)
 	var total float32 = 0.0
 	for _, row := range rows {
 		p, err := rpc.ProductClient.GetProduct(h.Context, &product.GetProductReq{Id: int32(row.ProductId)})
-		if err != nil {
+		if err != nil || p.Product == nil {
 			continue
 		}
 		cartItems = append(cartItems, map[string]any{
