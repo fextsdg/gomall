@@ -8,6 +8,7 @@ replace gomall/rpc_gen => ../../rpc_gen
 
 require (
 	github.com/cloudwego/kitex v0.12.3
+	github.com/hashicorp/go-uuid v1.0.2
 	github.com/kitex-contrib/obs-opentelemetry/logging/logrus v0.0.0-20241120035129-55da83caab1b
 	github.com/kitex-contrib/registry-consul v0.1.0
 	github.com/kr/pretty v0.3.1

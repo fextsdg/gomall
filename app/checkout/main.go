@@ -2,6 +2,7 @@ package main
 
 import (
 	consul "github.com/kitex-contrib/registry-consul"
+	"gomall/app/checkout/rpc"
 	"net"
 	"time"
 
@@ -17,7 +18,7 @@ import (
 
 func main() {
 	opts := kitexInit()
-
+	rpc.Init()
 	svr := checkoutservice.NewServer(new(CheckOutServiceImpl), opts...)
 
 	err := svr.Run()
