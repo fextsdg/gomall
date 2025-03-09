@@ -3,6 +3,7 @@ package payment
 import (
 	"context"
 	payment "gomall/rpc_gen/kitex_gen/payment"
+	"gomall/rpc_gen/kitex_gen/payment/paymentservice"
 
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/client/callopt"
