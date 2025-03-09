@@ -6,16 +6,20 @@ import (
 	"gomall/app/frontend/conf"
 	"gomall/app/frontend/utils"
 	"gomall/rpc_gen/kitex_gen/cart/cartservice"
+	"gomall/rpc_gen/kitex_gen/checkout/checkoutservice"
+	"gomall/rpc_gen/kitex_gen/payment/paymentservice"
 	"gomall/rpc_gen/kitex_gen/product/productcatalogservice"
 	"gomall/rpc_gen/kitex_gen/user/userservice"
 	"sync"
 )
 
 var (
-	once          sync.Once //保证只被初始化一次
-	UserClient    userservice.Client
-	ProductClient productcatalogservice.Client
-	CartClient    cartservice.Client
+	once           sync.Once //保证只被初始化一次
+	UserClient     userservice.Client
+	ProductClient  productcatalogservice.Client
+	CartClient     cartservice.Client
+	PaymentClient  paymentservice.Client
+	CheckOutClient checkoutservice.Client
 )
 
 // 初始化客户端
@@ -24,6 +28,8 @@ func Init() {
 		initUserClient()
 		initProductClient()
 		initCartClient()
+		initPaymentClient()
+		initCheckOutClient()
 	})
 }
 
@@ -53,4 +59,17 @@ func initCartClient() {
 	r, err := consul.NewConsulResolver(conf.GetConf().Hertz.RegistryAddress[0])
 	utils.MustHandlerError(err)
 	CartClient = cartservice.MustNewClient("cart", client.WithResolver(r))
+}
+
+func initPaymentClient() {
+	r, err := consul.NewConsulResolver(conf.GetConf().Hertz.RegistryAddress[0])
+	utils.MustHandlerError(err)
+	PaymentClient = paymentservice.MustNewClient("payment", client.WithResolver(r))
+}
+
+func initCheckOutClient() {
+	r, err := consul.NewConsulResolver(conf.GetConf().Hertz.RegistryAddress[0])
+	utils.MustHandlerError(err)
+	CheckOutClient = checkoutservice.MustNewClient("checkout", client.WithResolver(r))
+
 }
