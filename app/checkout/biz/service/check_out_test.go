@@ -28,7 +28,7 @@ func TestCheckOut_Run(t *testing.T) {
 		},
 		CreditInfo: &payment.CreditInfo{
 			CreditCardNumber:     "4111111111111111",
-			CreditCardCvv:        123,
+			CreditCardCvv:        13,
 			CreditExpirationYear: 2025,
 			CreditExpirationMoth: 12,
 		},

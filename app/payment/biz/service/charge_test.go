@@ -19,7 +19,7 @@ func TestCharge_Run(t *testing.T) {
 		OrderId: "ORD123456789", // 填充一个有效的订单ID
 		CreditInfo: &payment.CreditInfo{
 			CreditCardNumber:     "4111111111111111", // 填充一个有效的信用卡号
-			CreditCardCvv:        123,                // 填充一个有效的CVV码
+			CreditCardCvv:        12,                 // 填充一个有效的CVV码
 			CreditExpirationYear: 2025,               // 填充一个有效的过期年份
 			CreditExpirationMoth: 12,                 // 填充一个有效的过期月份
 		},

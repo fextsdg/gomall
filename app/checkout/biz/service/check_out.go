@@ -44,14 +44,14 @@ func (s *CheckOutService) Run(req *checkout.CheckOutReq) (resp *checkout.CheckOu
 	if req.CreditInfo == nil {
 		return nil, kerrors.NewGRPCBizStatusError(5004003, "参数有误！")
 	}
-	chargeResp, err := rpc.PaymentClient.Charge(s.ctx, &payment.ChargeReq{
+	chargeResp, err1 := rpc.PaymentClient.Charge(s.ctx, &payment.ChargeReq{
 		UserId:     uint32(req.UserId),
 		OrderId:    orderId,
 		CreditInfo: req.GetCreditInfo(),
 		Amount:     amount,
 	})
-	if err != nil {
-		return nil, kerrors.NewGRPCBizStatusError(5005001, err.Error())
+	if err1 != nil || chargeResp == nil {
+		return nil, err1
 	}
 
 	return &checkout.CheckOutResp{

@@ -35,8 +35,7 @@ func (s *ChargeService) Run(req *payment.ChargeReq) (resp *payment.ChargeResp, e
 	}
 	err = cd.Validate(true) //验证 credit.Card 对象的有效性。true 参数代表测试卡号有效
 	if err != nil {
-		println(err)
-		return nil, kerrors.NewGRPCBizStatusError(4004002, err.Error())
+		return nil, err
 	}
 	transcationId, err := uuid.GenerateUUID()
 	if err != nil {
@@ -50,7 +49,7 @@ func (s *ChargeService) Run(req *payment.ChargeReq) (resp *payment.ChargeResp, e
 		PayAt:         time.Now(),
 	})
 	if err != nil {
-		return nil, kerrors.NewGRPCBizStatusError(4005001, err.Error())
+		return nil, err
 	}
 	return &payment.ChargeResp{TransactionId: transcationId}, nil
 }
