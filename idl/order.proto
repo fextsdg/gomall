@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package order;
+option go_package = "order";
+import "checkout.proto";
+import "cart.proto";
+service OrderService{
+    rpc AddOrder(AddOrderReq) returns (AddOrderResp);
+    rpc ListOrder(ListOrderReq) returns (ListOrderResp);
+
+}
+
+message AddOrderReq{
+    uint32 user_id=1;
+    string user_currency = 2;//支付方式
+    string email=3;
+    checkout.Address address = 4;
+    repeated OrderItem order_items = 5;
+
+}
+message OrderItem{
+    cart.CartItem cart_item = 1;
+    float cost=2;
+}
+message AddOrderResult{
+    string order_id=1;
+}
+
+message AddOrderResp{
+    AddOrderResult add_order_result = 1;
+}
+
+
+message ListOrderReq{
+    uint32 user_id=1;
+}
+
+message Order {
+    repeated OrderItem order_items = 1;
+    string order_id = 2;
+    uint32 user_id = 3;
+    string user_currency = 4;
+    checkout.Address address = 5;
+    string email = 6;
+    int32 created_at = 7;//创建时间
+}
+
+message ListOrderResp{
+    repeated Order orders = 1;
+}
