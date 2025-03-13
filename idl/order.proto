@@ -42,7 +42,7 @@ message Order {
     string user_currency = 4;
     checkout.Address address = 5;
     string email = 6;
-    int32 created_at = 7;//创建时间
+    int64 created_at = 7;//创建时间
 }
 
 message ListOrderResp{
