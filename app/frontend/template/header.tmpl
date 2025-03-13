@@ -84,6 +84,16 @@
             </div>
           </div>
         </nav>
+        <div class="bg-primary text-center text-white pt-1 pb-1">This website is hosted for demo purposes only. It is
+            not an
+            actual shop.
+        </div>
+        {{ if .error }}
+            <div class="alert alert-danger text-center" role="alert">{{ .error }}</div>
+         {{ end }}
+        {{ if .warning }}
+            <div class="alert alert-warning text-center" role="alert">{{ .warning }}</div>
+        {{ end }}
     </header>
 
     <main style="min-height: calc(80vh) " class="py-3">
