@@ -7,6 +7,7 @@ import (
 	"gomall/app/frontend/utils"
 	"gomall/rpc_gen/kitex_gen/cart/cartservice"
 	"gomall/rpc_gen/kitex_gen/checkout/checkoutservice"
+	"gomall/rpc_gen/kitex_gen/order/orderservice"
 	"gomall/rpc_gen/kitex_gen/payment/paymentservice"
 	"gomall/rpc_gen/kitex_gen/product/productcatalogservice"
 	"gomall/rpc_gen/kitex_gen/user/userservice"
@@ -20,6 +21,7 @@ var (
 	CartClient     cartservice.Client
 	PaymentClient  paymentservice.Client
 	CheckOutClient checkoutservice.Client
+	OrderClient    orderservice.Client
 )
 
 // 初始化客户端
@@ -30,6 +32,7 @@ func Init() {
 		initCartClient()
 		initPaymentClient()
 		initCheckOutClient()
+		initOrderClient()
 	})
 }
 
@@ -72,4 +75,12 @@ func initCheckOutClient() {
 	utils.MustHandlerError(err)
 	CheckOutClient = checkoutservice.MustNewClient("checkout", client.WithResolver(r))
 
+}
+
+func initOrderClient() {
+	r, err := consul.NewConsulResolver(conf.GetConf().Hertz.RegistryAddress[0])
+	if err != nil {
+		utils.MustHandlerError(err)
+	}
+	OrderClient = orderservice.MustNewClient("order", client.WithResolver(r))
 }
