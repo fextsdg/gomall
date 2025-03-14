@@ -9,6 +9,7 @@ gen-appfront:
 	@cd app/frontend && cwgo server --type HTTP --idl ..\..\idl\frontend\category_page.proto   --service frontend --module gomall/app/frontend -I ..\..\idl\
 	@cd app/frontend && cwgo server --type HTTP --idl ..\..\idl\frontend\cart_page.proto   --service frontend --module gomall/app/frontend -I ..\..\idl\
 	@cd app/frontend && cwgo server --type HTTP --idl ..\..\idl\frontend\checkout_page.proto   --service frontend --module gomall/app/frontend -I ..\..\idl\
+	@cd app/frontend && cwgo server --type HTTP --idl ..\..\idl\frontend\order_page.proto   --service frontend --module gomall/app/frontend -I ..\..\idl\
 
 
 
