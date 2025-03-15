@@ -16,3 +16,9 @@ services:
     command:
       --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci #字符集设置
 
+  nats:
+    image: nats:latest
+    ports:
+      - 4222:4222
+      - 8222:8222
+

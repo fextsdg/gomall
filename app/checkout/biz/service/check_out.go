@@ -3,12 +3,16 @@ package service
 import (
 	"context"
 	"github.com/cloudwego/kitex/pkg/kerrors"
+	"github.com/nats-io/nats.go"
+	"gomall/app/checkout/mq"
 	"gomall/app/checkout/rpc"
 	"gomall/rpc_gen/kitex_gen/cart"
 	checkout "gomall/rpc_gen/kitex_gen/checkout"
+	"gomall/rpc_gen/kitex_gen/email"
 	"gomall/rpc_gen/kitex_gen/order"
 	"gomall/rpc_gen/kitex_gen/payment"
 	"gomall/rpc_gen/kitex_gen/product"
+	"google.golang.org/protobuf/proto"
 )
 
 type CheckOutService struct {
@@ -65,8 +69,28 @@ func (s *CheckOutService) Run(req *checkout.CheckOutReq) (resp *checkout.CheckOu
 		CreditInfo: req.GetCreditInfo(),
 		Amount:     amount,
 	})
+
 	if err1 != nil || chargeResp == nil {
 		return nil, err1
+	}
+
+	//生产者发送消息
+	//序列化
+	data, _ := proto.Marshal(&email.SendReq{
+		From:        "fextsdg@example.com",
+		To:          req.GetEmail(),
+		ContentType: "plain/text",
+		Topic:       "You have check out an order in our website!",
+		Content:     "You have check out an order in our website! You can click http:localhost:8080/order to see it!",
+	})
+	//制定消息
+	msg := nats.Msg{
+		Subject: "email",
+		Data:    data,
+	}
+	err = mq.Nc.PublishMsg(&msg) //发布订阅
+	if err != nil {
+		return nil, err
 	}
 
 	return &checkout.CheckOutResp{

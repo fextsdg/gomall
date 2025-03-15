@@ -48,3 +48,8 @@ gen-checkout:
 gen-order:
 	@cd rpc_gen && cwgo client --service order --type rpc --I ../idl --idl ../idl/order.proto --module gomall/rpc_gen
 	@cd app/order && cwgo server --type rpc --service order --module gomall/app/order  -I ../../idl --idl ../../idl/order.proto --pass "-use gomall/rpc_gen/kitex_gen"
+
+.PHONY :gen-email
+gen-email:
+	@cd rpc_gen && cwgo client --service email --type rpc --I ../idl --idl ../idl/email.proto --module gomall/rpc_gen
+	@cd app/email && cwgo server --type rpc --service email --module gomall/app/email  -I ../../idl --idl ../../idl/email.proto --pass "-use gomall/rpc_gen/kitex_gen"

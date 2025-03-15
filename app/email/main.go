@@ -1,9 +1,8 @@
 package main
 
 import (
-	consul "github.com/kitex-contrib/registry-consul"
-	"gomall/app/checkout/mq"
-	"gomall/app/checkout/rpc"
+	"gomall/app/email/biz/consumer"
+	"gomall/app/email/infra/mq"
 	"net"
 	"time"
 
@@ -12,16 +11,17 @@ import (
 	"github.com/cloudwego/kitex/server"
 	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
 	"go.uber.org/zap/zapcore"
-	"gomall/app/checkout/conf"
-	"gomall/rpc_gen/kitex_gen/checkout/checkoutservice"
+	"gomall/app/email/conf"
+	"gomall/rpc_gen/kitex_gen/email/emailservice"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 func main() {
+	mq.Init()       //初始化nats
+	consumer.Init() //初始化消费者
 	opts := kitexInit()
-	rpc.Init()
-	mq.Init() //初始化nats
-	svr := checkoutservice.NewServer(new(CheckOutServiceImpl), opts...)
+
+	svr := emailservice.NewServer(new(EmailServiceImpl), opts...)
 
 	err := svr.Run()
 	if err != nil {
@@ -41,12 +41,7 @@ func kitexInit() (opts []server.Option) {
 	opts = append(opts, server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{
 		ServiceName: conf.GetConf().Kitex.Service,
 	}))
-	//consul
-	r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0])
-	if err != nil {
-		panic(err)
-	}
-	opts = append(opts, server.WithRegistry(r))
+
 	// klog
 	logger := kitexlogrus.NewLogger()
 	klog.SetLogger(logger)
