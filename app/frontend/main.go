@@ -5,12 +5,14 @@ package main
 import (
 	"context"
 	"fmt"
+	prometheus "github.com/hertz-contrib/monitor-prometheus"
 	"github.com/hertz-contrib/sessions"
 	"github.com/hertz-contrib/sessions/redis"
 	"github.com/joho/godotenv"
 	utils2 "gomall/app/frontend/biz/utils"
 	"gomall/app/frontend/infra/rpc"
 	"gomall/app/frontend/middleware"
+	"gomall/common/mtl"
 	"os"
 	"time"
 
@@ -32,17 +34,33 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
+var (
+	CurrentServiceName = hertz_utils.ServiceName
+	RegistryAddress    = conf.GetConf().Hertz.RegistryAddress[0]
+)
+
 func main() {
 	//加载环境变量
 	err := godotenv.Load(".env")
 	if err != nil {
 		panic(fmt.Sprintf("加载环境变量出错,err:=%v", err))
 	}
+	consul, info := mtl.InitMetrics(CurrentServiceName, conf.GetConf().Hertz.MetricsPort, RegistryAddress)
+	defer consul.Deregister(info)
 	// init dal
 	// dal.Init()
 	rpc.Init()
 	address := conf.GetConf().Hertz.Address
-	h := server.New(server.WithHostPorts(address))
+	//集成prometheus
+	h := server.New(server.WithHostPorts(address),
+		server.WithTracer(prometheus.NewServerTracer(
+			"",
+			"",
+			prometheus.WithDisableServer(true),
+			prometheus.WithRegistry(mtl.Registry),
+		),
+		),
+	)
 
 	registerMiddleware(h)
 	middleware.Register(h)

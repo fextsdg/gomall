@@ -44,6 +44,7 @@ type Kitex struct {
 	LogMaxSize    int    `yaml:"log_max_size"`
 	LogMaxBackups int    `yaml:"log_max_backups"`
 	LogMaxAge     int    `yaml:"log_max_age"`
+	MetricsAddr   string `yaml:"metrics_addr"`
 }
 
 type Registry struct {

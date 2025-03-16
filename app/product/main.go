@@ -2,8 +2,10 @@ package main
 
 import (
 	"github.com/joho/godotenv"
-	consul "github.com/kitex-contrib/registry-consul"
+
 	"gomall/app/product/biz/dal"
+	"gomall/common/mtl"
+	"gomall/common/servicesuite"
 	"net"
 	"time"
 
@@ -17,11 +19,17 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
+var (
+	CurrentServiceName = conf.GetConf().Kitex.Service
+	RegistryAddress    = conf.GetConf().Registry.RegistryAddress[0]
+)
+
 func main() {
 	err1 := godotenv.Load(".env")
 	if err1 != nil {
 		panic(err1)
 	}
+	mtl.InitMetrics(CurrentServiceName, conf.GetConf().Kitex.MetricsPort, RegistryAddress)
 	opts := kitexInit()
 	dal.Init()
 
@@ -34,6 +42,7 @@ func main() {
 }
 
 func kitexInit() (opts []server.Option) {
+
 	// address
 	addr, err := net.ResolveTCPAddr("tcp", conf.GetConf().Kitex.Address)
 	if err != nil {
@@ -46,13 +55,12 @@ func kitexInit() (opts []server.Option) {
 		ServiceName: conf.GetConf().Kitex.Service,
 	}))
 
-	//服务注册中心consul
-	registry, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0])
-	if err != nil {
-		panic(err)
+	//consul+prometheus
+	suite := servicesuite.CommonServiceSuite{
+		CurrentServiceName: CurrentServiceName,
+		RegistryAddress:    RegistryAddress,
 	}
-	opts = append(opts, server.WithRegistry(registry))
-
+	opts = append(opts, server.WithSuite(suite))
 	// klog
 	logger := kitexlogrus.NewLogger()
 	klog.SetLogger(logger)

@@ -5,6 +5,7 @@ import (
 	"github.com/cloudwego/kitex/pkg/klog"
 	consul "github.com/kitex-contrib/registry-consul"
 	"gomall/app/checkout/conf"
+	"gomall/common/clientsuite"
 	"gomall/rpc_gen/kitex_gen/cart/cartservice"
 	"gomall/rpc_gen/kitex_gen/order/orderservice"
 	"gomall/rpc_gen/kitex_gen/payment/paymentservice"
@@ -13,11 +14,13 @@ import (
 )
 
 var (
-	Once          sync.Once
-	ProductClient productcatalogservice.Client
-	CartClient    cartservice.Client
-	PaymentClient paymentservice.Client
-	OrderClient   orderservice.Client
+	Once               sync.Once
+	ProductClient      productcatalogservice.Client
+	CartClient         cartservice.Client
+	PaymentClient      paymentservice.Client
+	OrderClient        orderservice.Client
+	CurrentServiceName = conf.GetConf().Kitex.Service
+	RegistryAddress    = conf.GetConf().Registry.RegistryAddress[0]
 )
 
 func Init() {
@@ -32,34 +35,34 @@ func Init() {
 }
 
 func initProductClient() {
-	r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
-	if err != nil {
-		klog.Fatal(err)
+	suite := clientsuite.CommonClientSuite{
+		CurrentServiceName: CurrentServiceName,
+		RegistryAddress:    RegistryAddress,
 	}
-	ProductClient = productcatalogservice.MustNewClient("product", client.WithResolver(r))
+	ProductClient = productcatalogservice.MustNewClient("product", client.WithSuite(suite))
 }
 
 func initCartClient() {
-	r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
-	if err != nil {
-		klog.Fatal(err)
+	suite := clientsuite.CommonClientSuite{
+		CurrentServiceName: CurrentServiceName,
+		RegistryAddress:    RegistryAddress,
 	}
-	CartClient = cartservice.MustNewClient("cart", client.WithResolver(r))
+	CartClient = cartservice.MustNewClient("cart", client.WithSuite(suite))
 }
 func initPaymentClient() {
-	r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
-	if err != nil {
-		klog.Fatal(err)
+	suite := clientsuite.CommonClientSuite{
+		CurrentServiceName: CurrentServiceName,
+		RegistryAddress:    RegistryAddress,
 	}
-	PaymentClient = paymentservice.MustNewClient("payment", client.WithResolver(r))
+	PaymentClient = paymentservice.MustNewClient("payment", client.WithSuite(suite))
 }
 
 func initOrderClient() {
-	r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
-	if err != nil {
-		klog.Fatal(err)
+	suite := clientsuite.CommonClientSuite{
+		CurrentServiceName: CurrentServiceName,
+		RegistryAddress:    RegistryAddress,
 	}
-	OrderClient = orderservice.MustNewClient("order", client.WithResolver(r))
+	OrderClient = orderservice.MustNewClient("order", client.WithSuite(suite))
 }
 
 func InitTest1() {

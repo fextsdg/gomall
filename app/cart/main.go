@@ -2,9 +2,10 @@ package main
 
 import (
 	"github.com/joho/godotenv"
-	consul "github.com/kitex-contrib/registry-consul"
 	"gomall/app/cart/biz/dal"
 	"gomall/app/cart/rpc"
+	"gomall/common/mtl"
+	"gomall/common/servicesuite"
 	"net"
 	"time"
 
@@ -18,11 +19,18 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
+var (
+	CurrentServiceName = conf.GetConf().Kitex.Service
+	RegistryAddress    = conf.GetConf().Registry.RegistryAddress[0]
+)
+
 func main() {
 	err1 := godotenv.Load(".env")
 	if err1 != nil {
 		panic(err1)
 	}
+	//初始化prometheus检测指标
+	mtl.InitMetrics(CurrentServiceName, conf.GetConf().Kitex.MetricsAddr, RegistryAddress)
 	opts := kitexInit()
 	dal.Init()
 	rpc.Init() //初始化商品服务
@@ -46,12 +54,11 @@ func kitexInit() (opts []server.Option) {
 	opts = append(opts, server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{
 		ServiceName: conf.GetConf().Kitex.Service,
 	}))
-	//服务注册中心
-	r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0])
-	if err != nil {
-		panic(err)
+	suite := servicesuite.CommonServiceSuite{
+		CurrentServiceName: CurrentServiceName,
+		RegistryAddress:    RegistryAddress,
 	}
-	opts = append(opts, server.WithRegistry(r))
+	opts = append(opts, server.WithSuite(suite))
 
 	// klog
 	logger := kitexlogrus.NewLogger()

@@ -2,8 +2,10 @@ package main
 
 import (
 	"github.com/joho/godotenv"
-	consul "github.com/kitex-contrib/registry-consul"
+
 	"gomall/app/payment/biz/dal"
+	"gomall/common/mtl"
+	"gomall/common/servicesuite"
 	"net"
 	"time"
 
@@ -17,11 +19,17 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
+var (
+	CurrentServiceName = conf.GetConf().Kitex.Service
+	RegistryAddress    = conf.GetConf().Registry.RegistryAddress[0]
+)
+
 func main() {
 	err1 := godotenv.Load(".env")
 	if err1 != nil {
 		panic(err1)
 	}
+	mtl.InitMetrics(CurrentServiceName, conf.GetConf().Kitex.MetricsPort, RegistryAddress)
 	opts := kitexInit()
 	dal.Init()
 	svr := paymentservice.NewServer(new(PaymentServiceImpl), opts...)
@@ -39,12 +47,12 @@ func kitexInit() (opts []server.Option) {
 		panic(err)
 	}
 	opts = append(opts, server.WithServiceAddr(addr))
-	//consul
-	r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0])
-	if err != nil {
-		panic(err)
+	//consul+prometheus
+	suite := servicesuite.CommonServiceSuite{
+		CurrentServiceName: CurrentServiceName,
+		RegistryAddress:    RegistryAddress,
 	}
-	opts = append(opts, server.WithRegistry(r))
+	opts = append(opts, server.WithSuite(suite))
 	// service info
 	opts = append(opts, server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{
 		ServiceName: conf.GetConf().Kitex.Service,

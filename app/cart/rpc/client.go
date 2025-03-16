@@ -5,13 +5,16 @@ import (
 	consul "github.com/kitex-contrib/registry-consul"
 	"gomall/app/cart/conf"
 	"gomall/app/cart/utils"
+	"gomall/common/clientsuite"
 	"gomall/rpc_gen/kitex_gen/product/productcatalogservice"
 	"sync"
 )
 
 var (
-	once          sync.Once                    //保证只被初始化一次
-	ProductClient productcatalogservice.Client //用于根据商品id查询具体信息
+	once               sync.Once                    //保证只被初始化一次
+	ProductClient      productcatalogservice.Client //用于根据商品id查询具体信息
+	CurrentServiceName = conf.GetConf().Kitex.Service
+	RegistryAddress    = conf.GetConf().Registry.RegistryAddress[0]
 )
 
 // 初始化客户端
@@ -40,10 +43,12 @@ func InitTest() {
 // - 创建用户服务客户端：使用 Consul 解析器初始化用户服务客户端。
 
 func initProductClient() {
-	r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
 
-	utils.MustHandlerError(err)
-	ProductClient = productcatalogservice.MustNewClient("product", client.WithResolver(r))
+	suite := clientsuite.CommonClientSuite{
+		CurrentServiceName: CurrentServiceName,
+		RegistryAddress:    RegistryAddress,
+	}
+	ProductClient = productcatalogservice.MustNewClient("product", client.WithSuite(suite))
 }
 
 func initTestProductClient() {

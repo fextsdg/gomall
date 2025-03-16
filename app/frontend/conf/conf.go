@@ -48,6 +48,7 @@ type Hertz struct {
 	LogMaxBackups   int      `yaml:"log_max_backups"`
 	LogMaxAge       int      `yaml:"log_max_age"`
 	RegistryAddress []string `yaml:"registry_address"`
+	MetricsPort     string   `yaml:"metrics_port"`
 }
 
 // GetConf gets configuration instance
